@@ -21,12 +21,12 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Navbar dark color="primary">
+        <Navbar  dark color="primary">
           <div className="container">
-            <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
+            <NavbarBrand >Ristorante Con Fusion</NavbarBrand>
           </div>
         </Navbar>
-        <Menu dishes={this.state.dishes} onClickProps={(dishId) => this.onDishSelect(dishId)}/> 
+        <Menu dishes={this.state.dishes}  onClickProps={(dishId) => this.onDishSelect(dishId)}/> 
         <DishDetail details={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
       </div>
     );
