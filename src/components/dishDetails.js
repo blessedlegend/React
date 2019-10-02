@@ -7,7 +7,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-function RenderComments({ comments }) {
+function RenderComments({ comments,addComment,dishId }) {
     if (comments == null) {
         return (
             <div></div>
@@ -27,6 +27,7 @@ function RenderComments({ comments }) {
             <h4> Comments </h4>
             <ul className='list-unstyled'>
                 {showcomments}
+                <CommentForm dishId={dishId} addComment={addComment}  />
             </ul>
 
         </div>
@@ -74,8 +75,7 @@ class CommentForm extends Component {
     handleSubmit(values) {
         this.toggleModal();
 
-        console.log('comment:', values);
-        alert('comment:' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.message);
     }
 
     render() {
@@ -154,8 +154,10 @@ const DishDetail = (props) => {
                     <RenderDish dish={props.dish} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments} />
-                    <CommentForm />
+                    <RenderComments comments={props.comments}
+                    addComment={props.addComment}
+                    dishId={props.dish.id} />
+                   
                 </div>
             </div>
         </Container>
