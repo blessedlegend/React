@@ -85,7 +85,7 @@ class CommentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
                     <ModalBody>
-                        <div className="col-12 col-md-9">
+                        {/* <div className="col-12 col-md-9"> */}
                             <LocalForm onSubmit={(values) => this.handleSubmit(values)} >
                                 <Row className="form-group">
                                     <Label htmlFor="rating" md={3}>Rating</Label>
@@ -118,7 +118,7 @@ class CommentForm extends Component {
 
                                 <Button type="submit" value="submit" color="primary">Submit</Button>
                             </LocalForm>
-                        </div>
+                        {/* </div> */}
                     </ModalBody>
                 </Modal>
             </div>
