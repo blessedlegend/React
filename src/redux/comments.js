@@ -2,6 +2,7 @@ import { COMMENTS } from '../shared/comments';
 import * as ActionTypes from './ActionTypes';
 
 export const Comments = (state = COMMENTS, action) => {
+    // console.log('Reducer',action)
     switch (action.type) {
         case ActionTypes.ADD_COMMENT:
             var comment = action.payload;
