@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseURL';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 
 export const addComment = (comment) => ({
@@ -40,6 +41,46 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
         .then(response => dispatch(addComment(response)))
         .catch(error => { console.log('post comments', error.message); alert('Your comment could not be posted\nError: ' + error.message); });
 };
+
+export const postFeedback = (firstname, lastname, telnum, email, agree, contactType, message) => (dispatch) => {
+
+    const newFeedback = {
+        firstname:firstname,
+        lastname:lastname,
+        telnum:telnum,
+        email:email,
+        agree:agree,
+        contactType:contactType,
+        message:message
+    };
+    newFeedback.date = new Date().toISOString();
+
+    return fetch(baseUrl + 'feedback',{
+        method: "POST",
+        body: JSON.stringify(newFeedback),
+        headers:{
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response =>{
+        if(response.ok){
+            return response;
+        }else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);
+            error.response = response ;
+            throw error;
+        }
+    },
+    error => {
+        throw error;
+    })
+    .then(response => response.json())
+    .then(response => {alert('Thanks For your Feedback! ' + JSON.stringify(response))})
+    .catch(error =>  { console.log('post Feedback', error.message); alert('Your Feedback could not be posted\nError: '+error.message); });
+}
+
+
 
 
 export const fetchDishes = () => (dispatch) => {
@@ -111,7 +152,7 @@ export const addComments = (comments) => ({
 
 export const fetchPromos = () => (dispatch) => {
 
-    dispatch(promosLoading());
+    dispatch(promosLoading(true));
 
     return fetch(baseUrl + 'promotions')
         .then(response => {
@@ -145,3 +186,40 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const fetchLeaders = () => (dispatch) => {
+
+    dispatch(leaderLoading());
+
+    return fetch(baseUrl + 'leaders')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(leader => dispatch(addLeader(leader)))
+        .catch(error => dispatch(leaderFailed(error.message)));
+}
+
+export const leaderLoading = () => ({
+    type: ActionTypes.LEADER_LOADING,
+})
+
+export const leaderFailed = (errMess) => ({
+    type: ActionTypes.LEADER_FAILED,
+    payload: errMess
+});
+
+export const addLeader = (leader) => ({
+    type: ActionTypes.ADD_LEADER,
+    payload: leader
+})
