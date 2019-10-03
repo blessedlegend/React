@@ -79,11 +79,9 @@ class CommentForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     toggleModal() {
-        {
             this.setState({
                 isModalOpen: !this.state.isModalOpen
             });
-        }
     }
     handleSubmit(values) {
         this.toggleModal();
@@ -141,7 +139,6 @@ class CommentForm extends Component {
 
 
 const DishDetail = (props) => {
-    const dish = props.dish;
     if (props.isLoading) {
         return (
             <div className='Container'>

@@ -1,6 +1,5 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseURL';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 
 export const addComment = (comment) => ({
